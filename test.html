@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageToLua</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@200&family=Mitr&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="foreground/img/favicon.ico" type="image/x-icon">
+    <link rel="bookmark" href="foreground/img/favicon.ico">
+    <script src='https://cdn.staticfile.org/vue/2.2.2/vue.min.js' type='text/javascript'></script>
+    <script src='https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.8/clipboard.min.js' type='text/javascript'></script>
+
+    <script id="worker" type="app/worker">
+        "use strict";function _slicedToArray(e,t){return _arrayWithHoles(e)||_iterableToArrayLimit(e,t)||_nonIterableRest()}function _nonIterableRest(){throw new TypeError("Invalid attempt to destructure non-iterable instance")}function _iterableToArrayLimit(e,t){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e)){var a=[],n=!0,o=!1,r=void 0;try{for(var l,i=e[Symbol.iterator]();!(n=(l=i.next()).done)&&(a.push(l.value),!t||a.length!==t);n=!0);}catch(e){o=!0,r=e}finally{try{n||null==i.return||i.return()}finally{if(o)throw r}}return a}}function _arrayWithHoles(e){if(Array.isArray(e))return e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var n=t[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}var colorTablePng=[4292005375,4291869688,4293377761,4293510353,4293511877,4294696635,4294763955,4294110130,4292599730,4291421896,4291358172,4291032304,4291099135,4289981695,4289913087,4290563327,4278255616,4294967295,4291349719,4287736831,4286631167,4286767359,4288542207,4288474854,4289061317,4289189541,4291087232,4293582464,4294628481,4294560400,4292520095,4292582835,4292383694,4289826804,4288322287,4285756389,4287783664,4291324090,4291655061,4291528313,4294358372,4294427471,4292989005,4289508941,4286891905,4286698926,4285917148,4285985279,4283422207,4283283455,4284844799,4288981692,4293848814,4292927712,4286548129,4282609919,4280723455,4280863487,4284018431,4283949524,4284861596,4285184870,4288325158,4292527654,4294358569,4294288706,4290800476,4290926462,4290529195,4286202092,4283454447,4281746420,4284686057,4289734556,4290198119,4290072895,4294153761,4294224131,4292131840,4287141376,4283477836,4283089803,4281982157,4282117119,4278698495,4278229247,4280440831,4284706445,4290624957,4288585374,4282930553,4280177140,4278226171,4278236159,4281719037,4281584320,4282561404,4282884163,4286286080,4290882560,4293237507,4293232670,4289415481,4289803614,4289340558,4284488664,4281678309,4281282515,4284160194,4288814971,4289211729,4288626480,4291982873,4291921922,4289173248,4285233408,4282158648,4281900904,4281054383,4281188603,4278231295,4278222069,4279847654,4282469485,4285887861,4284572001,4281811037,4279583704,4278217967,4278226943,4280658169,4280589726,4281305941,4281498926,4284246272,4287595264,4290606850,4290798869,4287837480,4288685893,4288289642,4283897005,4280821958,4280032439,4283371144,4287370314,4287765297,4286456602,4288759565,4288370433,4284768256,4282404096,4280311323,4280183091,4279728002,4279730165,4278218751,4278211046,4278990527,4281218126,4282532418,4280361249,4280493886,4278201565,4278218239,4278234111,4278245119,4278250158,4279754084,4283680768,4289052416,4292130816,4293562624,4294926889,4294856496,4293525602,4294901930,4284617157,4278190293,4282652671,4283891957,4294508757,4294909797,4294859325,4294932777,4294946816,4294960384,4290177309,4285982208,4278452086,4278255558,4278250239,4278240511,4278227455,4278205951,4294045676,4287331680,4286213716,4292663503,4282412799,4282428415,4282439679,4278255615,4282515438,4284088242,4289654889,4292542308,4294967064,4294952e3,4294937156,4294864211,4294921596,4294656224,4286660863,4283585279,4286614271,4289429759,4294738154,4294936755,4294942348,4294947202,4294957184,4294967172,4293656487,4291491513,4287692748,4286709748,4287496191,4286572031,4286632447,4286619391,4289635472,4283385655,4281872934,4288450680,4292928511,4292341759,4292211967,4292738303,4292606968,4292868589,4292801245,4293783761,4294571473,4294964185,4294699734,4294304479,4294435048,4294170095,4293122298,4293124348,16777215],FLAG={CONVERT_PROGRESS:0,CONVERT_FINISHED:1,ANALYSIS_PROGRESS:2,ANALYSIS_FINISHED:3},MSG={SEND_IMAGE_INFO:0},ImageConvert=function(){function a(e,t){_classCallCheck(this,a),this.cb=t||function(){},this.ucharColorTable=this.converToUcharTable(e),this.isDither,this.w,this.h,this.indexTable=[],this._count=0,this.alphaThreshold=128}return _createClass(a,[{key:"setHandleCallBack",value:function(e){this.cb=e}},{key:"converImageToIndex8",value:function(e){var t=e.buffer,a=e.bkColor,n=e.isDither,o=e.width,r=e.height;this.w=o,this.h=r;var l=new Uint8ClampedArray(t);return a&&4===a.length&&this.setImageBackground(l,a),n?this.toIndexDither(l,this.ucharColorTable,o,r):this.toIndexNodither(l),this.indexTable}},{key:"setImageBackground",value:function(e,t){var a=_slicedToArray(t,4),n=a[0],o=a[1],r=a[2];if(!(a[3]<255))for(var l=0;l<e.length;l+=4){var i=e[l+3];e[l]=(n*(255-i)+i*e[l])/255,e[l+1]=(o*(255-i)+i*e[l+1])/255,e[l+2]=(r*(255-i)+i*e[l+2])/255,e[l+3]=255}}},{key:"converToUcharTable",value:function(e){for(var t=[],a=new Uint32Array(e),n=a.buffer,o=0;o<a.length;o++)t.push(new Uint8ClampedArray(n,4*o,4));return t}},{key:"getColorDistance",value:function(e,t){var a=(e[0]+t[0])/2,n=e[0]-t[0],o=e[1]-t[1],r=e[2]-t[2];return(512+a)*n*n+o*o*1024+(767-a)*r*r}},{key:"findSimilarColour",value:function(e,t){for(var a,n=t[0],o=0,r=this.getColorDistance(e,t[0]),l=0;l<t.length-1;l++)(a=this.getColorDistance(e,t[l]))<r&&(r=a,n=t[o=l]);return[n,o]}},{key:"toIndexNodither",value:function(e){for(var t,a,n,o,r=0;r<e.length;r+=4){this.checkHandleProgress(),e[r+3]<this.alphaThreshold?(e[r+3]=0,this.indexTable.push(251)):(t=new Uint8ClampedArray(e.buffer,r,4),n=(a=_slicedToArray(this.findSimilarColour(t,this.ucharColorTable),2))[0],o=a[1],e[r]=n[0],e[r+1]=n[1],e[r+2]=n[2],e[r+3]=255,this.indexTable.push(o))}this.imageHandleFinished(e.buffer)}},{key:"imageHandleFinished",value:function(e){this._count=0,this.cb({msg:FLAG.CONVERT_FINISHED,indexTable:this.indexTable,buffer:e})}},{key:"checkHandleProgress",value:function(){this._count++,this._count%1e4==0&&this.cb({msg:FLAG.CONVERT_PROGRESS,progress:(this._count/(this.w*this.h)).toFixed(2)})}},{key:"toIndexDither",value:function(a,e,n,t){for(var o,r,l,i,s,c=function(e,t){return new Uint8ClampedArray(a.buffer,4*e+t*n*4,4)},h=0;h<t;h++)for(var d=0;d<n;d++){this.checkHandleProgress(),o=c(d,h);var b=_slicedToArray(this.findSimilarColour(o,e),2),u=b[0],f=b[1];o[3]<this.alphaThreshold?(this.indexTable.push(251),o[3]=0):this.indexTable.push(f),r=o[0]-u[0],l=o[1]-u[1],i=o[2]-u[2],o[0]=u[0],o[1]=u[1],o[2]=u[2],d+1<n&&((s=c(d+1,h))[0]=s[0]+7/16*r,s[1]=s[1]+7/16*l,s[2]=s[2]+7/16*i,h+1<t&&((s=c(d+1,h+1))[0]=s[0]+1/16*r,s[1]=s[1]+1/16*l,s[2]=s[2]+1/16*i)),h+1<t&&((s=c(d,h+1))[0]=s[0]+5/16*r,s[1]=s[1]+5/16*l,s[2]=s[2]+5/16*i,0<d-1&&((s=c(d-1,h+1))[0]=s[0]+3/16*r,s[1]=s[1]+3/16*l,s[2]=s[2]+3/16*i))}this.imageHandleFinished(a.buffer)}},{key:"getIndexTable",value:function(){return this.indexTable}}]),a}(),ImgData2LuaStr=function(){function t(e){_classCallCheck(this,t),this.indexTable=[],this.cb=e,this.luaStr,this.w,this.h,this.face,this.size,this.speed,this.delay,this.blockid}return _createClass(t,[{key:"setConvertRules",value:function(e){this.indexTable=e.indexTable,this.w=e.width,this.h=e.height,this.blockid=e.blockid,this.face=parseInt(e.face),this.size=e.areaSize,this.speed=e.placeSpeed,this.delay=e.areaDelay*e.placeSpeed,this.startAnalysis()}},{key:"getPlaceBlockStr",value:function(e){var t;switch(e){case 1:t="Block:setBlockAll(x, y + blockData[2], z - blockData[1], blockid + blockColorInfo[2], blockColorInfo[1])";break;case 2:t="Block:setBlockAll(x, y + blockData[2], z + blockData[1], blockid + blockColorInfo[2], blockColorInfo[1])";break;case 3:t="Block:setBlockAll(x - blockData[1], y + blockData[2], z, blockid + blockColorInfo[2], blockColorInfo[1])";break;case 4:t="Block:setBlockAll(x + blockData[1], y + blockData[2], z, blockid + blockColorInfo[2], blockColorInfo[1])";break;case 11:t="Block:setBlockAll(x + blockData[2], y, z - blockData[1], blockid + blockColorInfo[2], blockColorInfo[1])";break;case 12:t="Block:setBlockAll(x - blockData[2], y, z + blockData[1], blockid + blockColorInfo[2], blockColorInfo[1])";break;case 13:t="Block:setBlockAll(x - blockData[1], y, z - blockData[2], blockid + blockColorInfo[2], blockColorInfo[1])";break;case 14:t="Block:setBlockAll(x + blockData[1], y, z + blockData[2], blockid + blockColorInfo[2], blockColorInfo[1])"}return t}},{key:"getPeoplePosStr",value:function(e){var t;switch(e){case 1:t="Player:setPosition(hostId, x - 20, y + 20, z - blockData[1])";break;case 2:t="Player:setPosition(hostId, x + 20, y + 20, z + blockData[1])";break;case 3:t="Player:setPosition(hostId, x - blockData[1], y + 20, z + 20)";break;case 4:t="Player:setPosition(hostId, x + blockData[1], y + 20, z - 20)";break;case 11:t="Player:setPosition(hostId, x + blockData[2], y + 20, z - blockData[1])";break;case 12:t="Player:setPosition(hostId, x - blockData[2], y + 20, z + blockData[1])";break;case 13:t="Player:setPosition(hostId, x - blockData[1], y + 20, z - blockData[2])";break;case 14:t="Player:setPosition(hostId, x + blockData[1], y + 20, z + blockData[2])"}return t}},{key:"startAnalysis",value:function(){this.luaStr="local blockTable = {{1,1},{1,0},{2,0},{3,0},{4,0},{5,0},{6,0},{7,0},{8,0},{9,0},{10,0},{11,0},{12,0},{13,0},{14,0},{15,0},{3,2},{0,0},{2,2},{1,2},{10,4},{15,1},{14,1},{13,1},{12,1},{11,1},{10,1},{9,1},{8,1},{0,3},{6,1},{5,1},{4,1},{3,1},{2,1},{4,2},{0,6},{6,2},{7,2},{8,2},{9,2},{10,2},{11,2},{12,2},{13,2},{14,2},{15,2},{7,1},{1,3},{2,3},{3,3},{4,3},{5,3},{7,4},{6,4},{5,4},{4,4},{3,4},{2,4},{1,4},{3,13},{15,3},{14,3},{13,3},{12,3},{11,3},{10,3},{9,3},{8,3},{7,3},{6,3},{8,4},{9,4},{0,2},{11,4},{12,4},{13,4},{14,4},{15,4},{3,5},{1,5},{2,5},{0,5},{4,5},{5,5},{6,5},{7,5},{8,5},{0,8},{11,6},{10,6},{9,6},{8,6},{7,6},{6,6},{5,6},{4,6},{3,6},{2,6},{1,6},{5,2},{0,11},{14,5},{13,5},{12,5},{11,5},{10,5},{12,6},{13,6},{14,6},{15,6},{15,8},{1,7},{2,7},{3,7},{4,7},{5,7},{6,7},{7,7},{8,7},{9,7},{10,7},{11,7},{12,7},{13,7},{0,7},{0,12},{13,8},{0,1},{11,8},{10,8},{9,8},{8,8},{0,13},{6,8},{5,8},{4,8},{3,8},{2,8},{1,8},{0,10},{15,7},{0,14},{10,10},{1,9},{2,9},{3,9},{4,9},{5,9},{6,9},{7,9},{8,9},{9,9},{10,9},{11,9},{12,9},{13,9},{14,9},{15,9},{9,5},{1,10},{0,15},{2,11},{1,11},{15,5},{15,10},{14,10},{13,10},{12,10},{11,10},{0,9},{9,10},{8,10},{7,10},{6,10},{5,10},{4,10},{3,10},{2,10},{4,11},{5,11},{6,11},{7,11},{8,11},{9,11},{10,11},{11,11},{12,11},{13,11},{14,11},{15,11},{14,8},{1,12},{2,12},{3,12},{4,12},{5,12},{7,13},{6,13},{5,13},{4,13},{0,4},{2,13},{1,13},{7,8},{15,12},{14,12},{13,12},{12,12},{11,12},{10,12},{9,12},{8,12},{7,12},{6,12},{8,13},{9,13},{10,13},{11,13},{12,13},{13,13},{14,13},{15,13},{14,7},{1,14},{2,14},{3,14},{4,14},{5,14},{6,14},{7,14},{8,14},{9,14},{11,15},{10,15},{9,15},{8,15},{7,15},{6,15},{5,15},{4,15},{3,15},{2,15},{1,15},{12,8},{15,14},{14,14},{13,14},{12,14},{11,14},{10,14}};\n",this.luaStr+="local data = [[";for(var e=0;e<this.w;e++)for(var t=0;t<this.h;t++){var a=(this.indexTable[e+(this.h-t-1)*this.w]+1).toString(16);1==a.length&&(a="0"+a),this.luaStr+=a}this.luaStr+="]]\nlocal blockid, face, w, h, size, speed, delay = ".concat(this.blockid,", ").concat(this.face,", ").concat(this.w,", ").concat(this.h,", ").concat(this.size,", ").concat(this.speed,", ").concat(this.delay,"\nlocal garphic_x, garphic_y, garphic_z, x, y, z, progress = 0, 0, 0, 0, 0, 0, 0\nlocal startGenerator = false\n(function()\n    local rx, ry, lx, ly = 0, 0, 0, 0\n    local _tempData, _data = {}, {}\n    for i = 1, #data, 2 do\n        _data[#_data + 1] = tonumber(string.sub(data, i, i + 1), 16)\n    end\n    rx = w % size\n    ry = h % size\n    if(rx == 0) then rx = size end\n    if(ry == 0) then ry = size end\n    for m = 1, w, size do\n        if (w - m < size) then lx = rx else lx = size end\n        for n = 1, h, size do\n            local matrix = {}\n            if (h - n < size) then ly = ry else ly = size end\n            for i = 1, ly do\n                for j = 1, lx do\n                    matrix[#matrix + 1] = {m + j - 2, n + i - 2, _data[(m + j - 2) * h + n - 1 + i]}\n                end\n            end\n            _tempData[#_tempData + 1] = matrix\n         end\n    end\n    data = _tempData\nend)()\nlocal placeColorBlock = (function()\n    local i1, i2, delayCount, canPlay = 1, 1, 1, true\n    local result, hostId = Player:getHostUin()\n    return function()\n        if(not startGenerator) then return end\n        if(not canPlay) then\n            delayCount = delayCount + 1\n            if(delayCount >= delay) then\n                delayCount = 1\n                canPlay = true\n            end\n            return\n        end\n        local blockDisplay = false\n        while not blockDisplay do\n            local matrix, blockData, blockColorInfo = data[i1]\n            if (i2 > #matrix) then\n                i2 = 1\n                i1 = i1 + 1\n                progress = (i1 * 1.0 / (#data + 1)) * 100\n                Chat:sendSystemMsg(string.format([[Complete - %.2f%%]], progress), 0)\n                if (i1 > #data) then\n                    startGenerator = false\n                    i1 = 1\n                    Player:setActionAttrState(0,PLAYERATTR.ENABLE_MOVE,true)\n                    Game:msgBox([[Generated!]])\n                    return\n                end\n                matrix = data[i1]\n                blockData = matrix[i2]\n                ").concat(this.getPeoplePosStr(this.face),";\n                canPlay = false\n                return\n            end\n            matrix = data[i1] \n            blockData = matrix[i2]\n            if(blockData[3] < 252) then\n                blockColorInfo = blockTable[blockData[3]]\n                blockDisplay = true\n                ").concat(this.getPlaceBlockStr(this.face),"\n            else blockDisplay = false end\n            i2 = i2 + 1\n        end\n    end\nend)()\nlocal Game_Update = function()\n    if (not startGenerator) then return end\n    for i = 1, speed do placeColorBlock() end\nend\nlocal Game_AnyPlayer_EnterGame = function(obj)\n    local result, uin = Player:getHostUin()\n    if (obj.eventobjid == uin) then\n        Backpack:setGridItem(uin, 1000, 804, 20, -1)\n        Backpack:setGridItem(uin, 1001, 12253, 2, -1)\n        Chat:sendSystemMsg([[#RPlace the first grid square #Bin the shortcut bar #R,a pixmap will be generated on the upper right of this square]], 0)\n     end\nend\nlocal Block_PlaceBy = function(obj)\n    if (obj.blockid == 804) then\n        garphic_x = obj.x\n        garphic_y = obj.y\n        garphic_z = obj.z\n        local graphicInfo = Graphics:makeGraphicsText([[Left click on this block to start creating.]], 16, 255, 1001)\n        Graphics:createGraphicsTxtByPos(garphic_x, garphic_y + 1, garphic_z, graphicInfo)\n    end\nend\nlocal Player_ClickBlock = function(obj)\n    if (obj.blockid == 804) then\n        if (startGenerator) then return end\n        Block:destroyBlock(obj.x, obj.y, obj.z, true)\n        Graphics:removeGraphicsByPos(garphic_x, garphic_y + 1, garphic_z, 1001, 1)\n        x = obj.x\n        y = obj.y\n        z = obj.z\n        startGenerator = true\n        Player:setActionAttrState(0,PLAYERATTR.ENABLE_MOVE,false)\n        Game:msgBox([[Creating a pixel image, please wait.]])\n    end\nend\n\nScriptSupportEvent:registerEvent([=[Game.AnyPlayer.EnterGame]=], Game_AnyPlayer_EnterGame)\nScriptSupportEvent:registerEvent([=[Game.Run]=], Game_Update)\nScriptSupportEvent:registerEvent([=[Block.PlaceBy]=], Block_PlaceBy)\nScriptSupportEvent:registerEvent([=[Player.ClickBlock]=], Player_ClickBlock)"),this.cb({msg:FLAG.ANALYSIS_FINISHED,str:this.luaStr})}}]),t}(),imgdata2luastr=new ImgData2LuaStr(function(e){self.postMessage(e)}),imageConvert=new ImageConvert(colorTablePng,function(e){switch(e.msg){case FLAG.CONVERT_PROGRESS:self.postMessage({msg:FLAG.CONVERT_PROGRESS,progress:e.progress});break;case FLAG.CONVERT_FINISHED:self.postMessage({msg:FLAG.CONVERT_FINISHED,buffer:e.buffer},[e.buffer])}});function setImage(e){var t=imageConvert.converImageToIndex8(e);e.indexTable=t,"0"==e.face_v?e.face=e.face_h:e.face="1"+e.face_h,imgdata2luastr.setConvertRules(e)}self.onmessage=function(e){var t=e.data,a=t.msg,n=t.data;switch(a){case MSG.SEND_IMAGE_INFO:setImage(n)}};
+    </script>
+    <script>
+        if ("ActiveXObject" in window) {
+            alert("IE ĐÃ CŨ VUI LÒNG DÙNG TRÌNH DUYỆT KHÁC");
+        }
+    </script>
+    <style>
+        html,
+        body {
+            margin: 0;
+            font-family: 'Bai Jamjuree', sans-serif;
+			font-family: 'Mitr', sans-serif;
+            font-size: 14px;
+        }
+
+        .mainbody {
+            display: flex;
+            align-items: center;
+            margin: 70px auto 0;
+            min-width: 1200px;
+            min-height: 800px;
+            height: calc(100vh - 70px);
+            background: url("picture.png")no-repeat center/ cover;
+        }
+
+        .bread-head {
+            position: absolute;
+            margin: 0 auto;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-width: 1200px;
+            height: 70px;
+            background: #000;
+            z-index: 9;
+        }
+
+        .center-box {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            margin: 0 auto;
+            width: calc(100% - 80px);
+            height: calc(100% - 80px);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .top {
+            position: relative;
+            margin: 0 auto;
+            flex: 1;
+            height: 600px;
+            width: 100%;
+        }
+
+        .bottom {
+            display: flex;
+            justify-content: space-between;
+            /* border-top-width: 3px;
+            border-color: rgba(0, 0, 0, 0.7);
+            border-top-style: dashed; */
+            height: 280px;
+            padding: 0 56px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-container {
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            width: calc(50% - 57px);
+            height: calc(100% - 57px);
+            background: url("picture2.png")repeat;
+            overflow: auto;
+        }
+
+        .split {
+            width: 2px;
+            height: calc(100% - 60px);
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        #drop-tip-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            height: 100%;
+            width: 100%;
+            color: rgb(1, 187, 254);
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .drop-tip-box-on {
+            background: rgba(230, 230, 230);
+        }
+
+        .error-msg {
+            position: fixed;
+            display: flex;
+            top: 20px;
+            left: 50%;
+            min-width: 380px;
+            padding: 15px 15px 15px 20px;
+            box-sizing: border-box;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #fef0f0;
+            border-color: #fde2e2;
+            z-index: 2000;
+            color: #F56C6C;
+            line-height: 15px;
+            font-size: 14px;
+            transform: translate(-50%, 50%);
+            opacity: 0;
+            transition: all 1s;
+        }
+
+        .error-msg::before {
+            content: "X";
+            margin-right: 10px;
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background-color: rgb(245, 108, 108);
+            color: #eee;
+            border-radius: 7px;
+            line-height: 15px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .error-msg-on {
+            top: 40% !important;
+            opacity: 1;
+        }
+
+        .el-input {
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            margin-left: 10px;
+            background-color: #fff;
+            background-image: none;
+            border-radius: 4px;
+            border: 1px solid #dcdfe6;
+            box-sizing: border-box;
+            color: #606266;
+            display: inline-block;
+            font-size: inherit;
+            height: 40px;
+            line-height: 40px;
+            outline: none;
+            padding: 0 15px;
+            transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+            width: 160px;
+        }
+
+        .el-input:focus {
+            outline: none;
+            border-color: #409eff;
+        }
+
+        .el-input-box {
+            display: block;
+            color: #606266;
+            margin-bottom: 16px;
+        }
+
+        .group {
+            width: 280px;
+            color: #606266;
+        }
+
+        .el-checkbox {
+            display: inline-block;
+            user-select: none;
+            cursor: pointer;
+            margin: 0px;
+            height: 16px;
+            font-size: 14px;
+            line-height: 16px;
+            color: #606266;
+        }
+
+        .el-checkbox input {
+            cursor: pointer;
+            vertical-align: top;
+            margin: 1px;
+            position: relative;
+            display: inline-block;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 1px solid #acaeb3;
+            border-radius: 2px;
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+
+        .el-checkbox input:hover,
+        input:focus {
+            border-color: #409eff;
+        }
+
+        .el-checkbox input:checked {
+            background-color: #409eff;
+            border-color: #409eff;
+        }
+
+        .el-checkbox input:checked+span {
+            color: #409eff;
+        }
+
+        .el-checkbox input:checked::before {
+            content: "";
+            width: 14px;
+            height: 14px;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACcSURBVDhPYxiG4N+/f5pArA7lEgd+/fpl/Pfv3/1AjVFQIcLg////xn/+/DkI1DgJqFEMKgwBQElWoGAYEPtChcAAZhMQTwTKcUOFEQCokREoUQVU8ALIDgCJAfmGUE39QDEOsEJsACjJD1Q0HYgfAzUVAemtUE2sUCW4Acg5QMWTgfgTEE8EamKDShEGIJuBBgQDMR9UaGgDBgYAwJyCbaajbPQAAAAASUVORK5CYII=')no-repeat -1px -1px/cover;
+            position: absolute;
+        }
+
+        .el-radiobox {
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 16px;
+        }
+
+        .el-radiobox input {
+            cursor: pointer;
+            margin: 1px;
+            position: relative;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border: 1px solid #acaeb3;
+            border-radius: 100%;
+            transition: all 0.3s;
+            outline: none;
+            vertical-align: top;
+        }
+
+        .el-radiobox input:hover,
+        input:focus {
+            border-color: #409eff;
+        }
+
+        .el-radiobox input:checked {
+            background-color: #409eff;
+            border-color: #409eff;
+        }
+
+        .el-radiobox input:checked+span {
+            color: #409eff;
+        }
+
+
+        .el-radiobox input:checked::before {
+            content: "";
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            top: 50%;
+            left: 50%;
+            background-color: #fff;
+            border-radius: 100%;
+            transform: translate(-50%, -50%);
+        }
+
+
+
+        .fieldset-container {
+            padding: 8px 10px 15px 10px;
+            margin-top: 10px;
+            box-sizing: border-box;
+            color: #606266;
+            border: 1px solid #d4d4d4;
+            min-width: 100px;
+            width: 270px;
+        }
+
+        .fieldset-box {
+            padding: 10px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+
+            color: #606266;
+            border: 1px solid #d4d4d4;
+        }
+
+        .el-select {
+            width: 160px;
+            box-sizing: border-box;
+            max-height: 41px;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .el-select-on .ul-contain {
+            height: 230px;
+        }
+
+
+        .el-select .el-select-head {
+            cursor: pointer;
+            outline: none;
+            padding: 0 20px 0 15px;
+            display: inline-block;
+            font-size: inherit;
+            height: 40px;
+            width: 160px;
+            color: #606266;
+            line-height: 40px;
+            background-color: #fff;
+            background-image: none;
+            border-radius: 4px;
+            border: 1px solid #dcdfe6;
+            box-sizing: border-box;
+            transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+            overflow: hidden;
+            outline: none;
+        }
+
+        .el-select .el-select-head:hover {
+            border: 1px solid #cfcfcf;
+        }
+
+        .el-select .el-select-head-focus {
+            border-color: #409eff !important;
+        }
+
+        .el-select {
+            margin-left: 10px;
+            vertical-align: text-top;
+            display: inline-block;
+            position: relative;
+        }
+
+        .el-select ul::before {
+            content: "";
+            display: block;
+            width: 8px;
+            height: 8px;
+            position: absolute;
+            top: -4px;
+            left: 15px;
+            z-index: 9;
+            background: #fff;
+            transform: rotate(45deg);
+        }
+
+
+        .el-select::after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            top: 13px;
+            right: 10px;
+            border-width: 1px 1px 0 0;
+            border-style: solid;
+            border-color: gray;
+            transform: rotate(135deg);
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .el-select-on::after {
+            transform: rotate(315deg);
+            top: 17px;
+        }
+
+        .ul-contain {
+            height: 0;
+            overflow: hidden;
+            transition: height 0.3s;
+        }
+
+        .el-select ul {
+            z-index: 9;
+            position: relative;
+            padding: 5px 0;
+            width: 160px;
+            max-height: 216px;
+            background: #fff;
+            border: 1px solid #e4e7ed;
+            border-radius: 4px;
+            background-color: #fff;
+            box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+            box-sizing: border-box;
+            margin: 6px 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .el-select ul li {
+            text-decoration: aliceblue;
+            user-select: none;
+            cursor: pointer;
+            padding-left: 13px;
+            padding-right: 13px;
+            height: 34px;
+            line-height: 34px;
+            list-style: none;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            color: #606266;
+        }
+
+        .el-select .is-select {
+            color: #409eff;
+            font-weight: 700;
+        }
+
+        .el-select .is-hover {
+            background-color: rgb(240, 240, 240);
+        }
+
+        .select-block {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .select-color-box {
+            display: flex;
+            align-items: center;
+            line-height: 40px;
+            height: 40px;
+        }
+
+        .show-color {
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            margin-left: 13px;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #e6e6e6;
+            border-radius: 4px;
+        }
+
+        .show-color-inside {
+            width: 28px;
+            height: 28px;
+            border: 1px solid #999;
+            border-radius: 2px;
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABeSURBVDhP7dAxCwAhCIZh//9fDYVyKgcPHSPF4UY/eLklno5Ai2NmRUQlorQG4zUYVgbXWv+DYwxHs8AOZs05/bv31nOOJyJh8Lrlzv7MoMrg9Q53hjYYrsF3dVD1AyI6EcVRcDK0AAAAAElFTkSuQmCC")repeat 5px top/41%;
+        }
+
+
+        .show-color-indicate {
+            width: 100%;
+            height: 100%;
+        }
+
+        .show-color::after {
+            content: "";
+            position: absolute;
+            display: block;
+            left: 15px;
+            top: 14px;
+            width: 6px;
+            height: 6px;
+            border-width: 1px 1px 0 0;
+            border-style: solid;
+            border-color: #fff;
+            transform: rotate(135deg);
+        }
+
+        .select-color-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .select-color-content {
+            position: absolute;
+            z-index: 99999;
+            padding: 15px 15px 20px 20px;
+            top: 50%;
+            left: 50%;
+            width: 720px;
+            height: 630px;
+            margin-top: -360px;
+            margin-left: -315px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        .color-div {
+            cursor: pointer;
+            box-sizing: border-box;
+            display: inline-block;
+            vertical-align: top;
+            width: 35px;
+            height: 35px;
+            margin: 5px 5px 0 0;
+            border-radius: 5px;
+        }
+
+        .color-div:last-child {
+            border: 2px solid #fff;
+        }
+
+        .color-div:last-child::after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAfFJREFUaEPtmH0rREEUxp/n6/B5vERRRFFEEUXZLYoooiiiKGrX5+HrPLp1V9Oay8ydc/cls3/uzj3z+50zd+fMEGP+4ZjzIwsMu4K5ArkCiRnISygxgcmP/68KSJoAMEWynZw6TwBJRwDeSX6Gxg+uQAnfBTAJoGUtUcK3AHwAmA6ViBEoslNM0PuYSTjwvdhtku5clQUJFigieCZKlvDEPCF5aL6EegEtJTyxzkjuh8IX46IqYCnhgb8guRsDX1sgdTl54K9IbsfCJwnUlfDA35DcrAOfLBAr4YG/I7leF95EIFTCA/9AcjUF3kzgLwkP/BPJ5VR4U4EqiRLS3ZReSC5awJsLVEi4rG8k563gGxH4RaJDctYSPgv4sul5YcdnCXngOyX9jGMxmi+xB/77hZX0CmDOkRitv1EP/I8sS3oGsOBIjMZGFrNJSXoEsORIDLeVqNMeSLoHsOJIDKeZS2nMJN0CWHMkBttOW7TEkq4BbDgSgznQWB5GJF0C2HIkmj1SWh0D3Z1N0jmAHee7Zg71Fgfwqj5I0imAPed3+2uVvoutqCyFNHCSjgEcNHaxVXaZxdVicWsWdOkUAt63nIq43dBbuca60VjwlPG17oVSJrR+NgtYZzQ2Xq5AbMasx+cKWGc0Nl6uQGzGrMd/ARtB/DE3TLnGAAAAAElFTkSuQmCC")no-repeat center/cover;
+        }
+
+        .color-selected::before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/png;base64,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")no-repeat center/70%;
+        }
+
+        .color-selected::after {
+            display: none !important;
+        }
+
+        .select-color-bottom {
+            display: flex;
+            flex-direction: row-reverse;
+            margin-top: 20px;
+            height: 40px;
+        }
+
+        .select-color-bottom button:last-child {
+            background-color: transparent;
+            color: #409eff;
+
+        }
+
+        button {
+            height: 40px;
+            cursor: pointer;
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            color: #fff;
+            background-color: #409eff;
+            border-color: #409eff;
+            text-align: center;
+            box-sizing: border-box;
+            outline: none;
+            margin-left: 10px;
+            transition: .1s;
+            font-weight: 500;
+            padding: 12px 20px;
+            line-height: 1;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background: #66b1ff;
+            border-color: #66b1ff;
+        }
+
+        .picker-enter-active {
+            transition: all 0.3s ease-out;
+        }
+
+        .picker-leave-active {
+            transition: all 0.3s ease-in;
+        }
+
+        .picker-enter,
+        .picker-leave-to {
+            top: -50%;
+            opacity: 0;
+        }
+
+        .lock-w-and-h {
+            margin-bottom: 16px;
+        }
+
+        .group3 {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .group3-top {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-content: space-around
+        }
+
+        .el-tip {
+            margin: 0 10px;
+            cursor: pointer;
+            width: 27px;
+            height: 27px;
+            opacity: 0.7;
+            transition: all 0.3s;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAABLJJREFUaEPtmUeoNEUQx38fiKCI+WDOB1ExoJjAdDEgmBMGzGdzPBgQDJivYk4YMSDGg+FgQMUAJjCHgwczhpPIT7of9WZndrpnZ5UHX8Hw9u1UVde/uyvuMpY4LVvi9rMcwP99gmOewAbAXsBOwCbhEeOX4XkLeBn4dgzwswLYCjgN2B3YpdKgN4BXgVuBDytlF9iHAlgVOAs4G/DzLPQrcANwI+DnKhoC4CTgXGDrxkqfA08ATwI/Aj+kv7KtCayV/h4EHAxs1pD/ALgOuLMGQS2AOwABRHoFuD4ZXrO2QM4B9mwICeDkUkU1AL5Ijpl1f5MMv7l0sQ6+MxKQDcN7nX7TEr2lAIwcOwaFrwGnAB+XLFLAsyVwO7Bb4H07RbSp4iUALgSuCloeBY4oMGoIyyPA4UHwIuDqaYr6ABwL3BcUGC28t/Mk/cnoluk44P6uBacBMDwap3O0eRA4Zp6WB90PAEen/41O5pnWEDsNwKXAZUmJDmuW1ZH7aJuQkfcGVgD0GQ25vE84vdeBzdbZsbWjVbYLgBnWRXOSOhMoiTaGRENtM8Znu82+uxaCMDrdlHjdfR18ImN3ATArarRknHf3+8i4fjewWg+jp7lRn7L03lPIeUIwZv9F1AXgHWD7xGnWNLtOIzPtJ8Daiek74BrgGeAvwGDg/5nMuOcVgHBTzO7Su8AOJQCsJPNd/xrYuGCh6C/PAScC3zfkol5fbQF8VqD7q3Bi+oZJboHaTsBSwXss3Zaqzb514k51OhzweKqD1HcY8Fif4lStnpr4LDEW1UptAOL93wd4qWARWTwFr5EhsIviSU0DGuWNZC+mLyb8oA2Au3JIEtgOeL8QQAnbQ8CRiXE/4PkCoW2B9xKfJ3ho3xWKDmyXpUOOQTY8rwdF67T4Sds664fubcKR207gJ2D1pGll4M8Zrd8c2CP4leq8prFcmLbESsAfieFnYI2+ExgLwAHAtS2Njxl5/4qe2GT6SzLaJimH6n+/ajuBsa5QdNi8aRp/VGUPbFWgnGR1YF20QPN04gjAQHBPepr5oe+G6uzPJqaJbm3MMNo0ZEjIbANjDnByIV0CXNF3Atbf9yamGmebF4C4EScE2zp9wNBpwSU5aTCKDKF9gSuB3wAT4hDSgT8C1kvCOwNv9p2A743XeVBVUswNMa5EJu7+08CBTaGuatTWMZeupeV0m0GWAVJpOdLUYRLNuz9RB8k8dkMTDXCK4TRDcl7qlKGGovNagdrp/V56AvI1W0rvdM0YJRZhNUVhtjGub0I8vw19TVM/kUQKtjPPkmp3X9X2D0+lNTqTX99YJfYG6prnTKhgPyZZ+gAo0ZyH/hezoWIwJQBU1pyLOiNyalYyZik2ZghjKQB1N+ejYw13vab23Xc1+90SQDUA1Neck/rdkPH6KsDxwAVh4m3FaaisoloAKndEcnFLne8E44VUq8QfOFZMUwVnQXZX66bfGIwykUx21SXHEAAuOuZPTCaph4FbgE+rtn9KJi7VY7NxOmDSyoOwUllrGw33mciwpUqGnkCbfq+EQJxkxJ9Z/04DLHfXx2GWM85FVWWpwU2+MQEMtWEmueUAZtq+EYSX/An8A8xA6TG0Wz4cAAAAAElFTkSuQmCC')no-repeat center/70%;
+        }
+
+        .el-tip:hover {
+            transform: scale(1.3);
+        }
+
+        .ditherbox {
+            display: flex;
+            align-items: center;
+            height: 40px;
+        }
+
+        .dither-container {
+            display: flex;
+            align-items: center;
+        }
+
+
+
+        .button-double button:first-child {
+            margin-left: 0;
+			font-family: 'Bai Jamjuree', sans-serif;
+			font-family: 'Mitr', sans-serif;
+        }
+
+
+        .srcimg {
+            position: absolute;
+        }
+
+        .image-container-right img {
+            position: absolute;
+        }
+
+        .progress-wrap {
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            z-index: 9799;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .progress-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 550px;
+            height: 110px;
+            padding: 0 30px;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            border-radius: 25px;
+        }
+
+        .progress-bottom {
+            height: 35px;
+            border-radius: 100px;
+            background-color: #f1f1f1;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .progress-top {
+            position: relative;
+            width: 0%;
+            height: 100%;
+            background: #409eff;
+            border-radius: 100px;
+            transition: width 0.2s ease-out;
+        }
+
+        .progress-tip {
+            position: absolute;
+            left: 95px;
+            top: 0;
+            width: 200px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            color: #fdfdfd;
+        }
+
+        .progress-btn {
+            margin-left: 20px;
+            text-align: center;
+            width: 80px;
+            transition: all 0.3s;
+        }
+
+        .progress-btn:disabled {
+            background-color: #a0cfff;
+            border-color: #a0cfff;
+            cursor: not-allowed;
+        }
+
+        .progress-enter-active {
+            transition: all 0.3s ease-out;
+        }
+
+        .progress-leave-active {
+            transition: all 0.3s ease-in;
+        }
+
+        .progress-enter,
+        .progress-leave-to {
+            opacity: 0;
+        }
+
+        .check-show-code {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            left: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .textarea-btn {
+            margin: 0 0 5px 0;
+			font-family: 'Bai Jamjuree', sans-serif;
+			font-family: 'Mitr', sans-serif;
+        }
+
+        .textarea-box {
+            margin: 16px 0;
+            position: relative;
+            display: flex;
+            flex: 1;
+            width: 100%;
+        }
+
+        textarea {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 5px 15px;
+            box-sizing: border-box;
+            outline: none;
+            border: none;
+            border-radius: 4px;
+            border: 1px solid #dcdfe6;
+            color: #606266;
+            transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+        }
+
+        .textarea-box {
+            position: relative;
+            width: 100%;
+
+        }
+
+        textarea:hover {
+            border-color: #409eff;
+        }
+
+        textarea:focus {
+            border-color: #409eff;
+        }
+
+        .bread-head .head {
+            display: flex;
+            justify-content: space-between;
+            width: 1200px;
+            height: 70px;
+            margin: 0 auto;
+        }
+
+        .bread-head .logo {
+            margin-top: 10px;
+            margin-left: 50px;
+        }
+
+        .bread-head .logo img {
+            width: 120px;
+        }
+
+        .nav-list-box {
+            flex: 1;
+            text-align: left;
+            line-height: 70px;
+            margin-left: 30px;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .click-upload-box {
+            left: 0;
+            top: 50%;
+            position: fixed;
+            z-index: 2;
+            height: 47px;
+            cursor: pointer;
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            color: #fff;
+            background-color: #409eff;
+            border-color: #409eff;
+            text-align: center;
+            box-sizing: border-box;
+            outline: none;
+            margin-left: 5px;
+            width: 100px;
+            border-radius: 5px;
+            padding: 8px 15px 20px 15px;
+            line-height: 1.2;
+            font-size: 14px;
+            transform: translateY(-50%);
+        }
+
+        .click-upload-box:hover {
+            background: #66b1ff;
+            border-color: #66b1ff;
+        }
+		
+		.btF {
+			font-family: 'Bai Jamjuree', sans-serif;
+			font-family: 'Mitr', sans-serif;
+		}
+    </style>
+</head>
+
+<body>
+    <div id='app'>
+        <transition name='progress'>
+            <el-progress :progress='progress' v-show='showProgress' @close='showProgress = false'>{{progressTip}}
+            </el-progress>
+        </transition>
+        <transition name='picker'>
+            <el-color-picker :colortable='colortable' @select-color='selectBkColor'
+                @select-color-close='closeColorPicker' v-show='showColorPicker'></el-color-picker>
+        </transition>
+        <header class='bread-head'>
+            <div class='head'>
+                <div class='logo'>
+                    <a href='https://www.miniworldgame.com/'>
+                        <img src='https://static.miniworldgame.com/nuxts-official-website/public/_nuxt/logo.0edc9054.png'>
+                    </a>
+                </div>
+                <div class='nav-list-box'>Image to Lua Script</div>
+            </div>
+        </header>
+        <div class='mainbody' @dragenter.stop='checkInDropBox($event, true)'
+            @dragleave.stop='checkInDropBox($event, false)' @dragover.stop.prevent @drop.stop.prevent>
+            <div class='center-box'>
+                <div class='top'>
+                    <label class='click-upload-box' for='uploadfile'>
+                        Tải ảnh lên
+                        <input type='file' id='uploadfile' style='display: none;' accept="image/*"
+                            @change='handleUploadFile'>
+                    </label>
+                    <div class='image-container-left image-container' ref='dropbox' @drop='dropfile'>
+                        <img :src="imageBase64Data" class='srcimg' @load='imgload'>
+                        <div id='drop-tip-box' v-bind:class="{'drop-tip-box-on': isdorpin}" ref='drop-tip-box'>
+                            <img
+                                src='data:image/png;base64,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'>
+                            <span id='#drop-tip'></span>
+                        </div>
+                    </div>
+                    <span class='split'></span>
+                    <div class='image-container-right image-container'>
+                        <img :src='destImageBase64Data' class='show-dest-img'>
+                    </div>
+                </div>
+                <div class='bottom'>
+                    <div class='group1 group'>
+                        <el-input-box @input='inputImageWidth' :value='destImgWidth' ref='input-w'>Chiều rộng
+                        </el-input-box>
+                        <el-checkbox v-model='lockWH' class='lock-w-and-h'>Giữ nguyên tỷ lệ</el-checkbox>
+                        <el-input-box @input='inputImageHeight' :value='destImgHeight' ref='input-h'>Chiều cao
+                        </el-input-box>
+                        <fieldset class="fieldset-container">
+                            <legend>Hướng hiển thị</legend>
+                            <fieldset class="fieldset-box">
+                                <el-radiobox name='face_isvertical' value='0' v-model='face_v'>Vuông góc với mặt đất</el-radiobox>
+                                <el-radiobox name='face_isvertical' value='1' v-model='face_v'>Song song với mặt đất</el-radiobox>
+                            </fieldset>
+                            <fieldset class="fieldset-box">
+                                <el-radiobox name='face_h' value='1' v-model='face_h'>Phía Đông</el-radiobox>
+                                <el-radiobox name='face_h' value='2' v-model='face_h'>Phía Tây</el-radiobox>
+                                <el-radiobox name='face_h' value='3' v-model='face_h'>Phía Nam</el-radiobox>
+                                <el-radiobox name='face_h' value='4' v-model='face_h'>Phía Bắc</el-radiobox>
+                            </fieldset>
+                        </fieldset>
+                    </div>
+                    <div class='group2 group' style='margin-left: 50px;'>
+                        <div class='select-block'>
+                            <span style='margin-right:18px'>Loại Khối</span>
+                            <el-select :options='blockInfo' @change='blockid = $event'></el-select>
+                        </div>
+                        <el-input-box v-model.number='areaSize'>Số lượng khối đặt trong một lần</el-input-box>
+                        <el-input-box v-model.number='areaDelay'>Tạm dừng sau số khối</el-input-box>
+                        <el-input-box v-model.number='placeSpeed'>Tốc độ đặt khối</el-input-box>
+                        <div class='select-color-box'>
+                            <span>Màu nền</span>
+                            <div class='show-color' @click.stop='showColorPicker = true'>
+                                <div class='show-color-inside'>
+                                    <div class='show-color-indicate' :style='{background:bkColor}'></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='group3 group' style='flex:1'>
+                        <div class='group3-top'>
+                            <div class='dither-container'>
+                                <div class='ditherbox'>
+                                    <el-checkbox v-model='isDither'>
+                                        Tôi không quan tâm đến các sự thay đổi
+                                    </el-checkbox>
+                                </div>
+
+                                <div class='el-tip'
+                                    title='ภาพที่ได้อาจมีการเปลี่ยนแปลงหรือถูกบิดเบือนเมื่อมีการทำเป็น Pixel'></div>
+                            </div>
+                            <div class='button-double'>
+                                <button @click='beginAnalysis'>Tạo lại kịch bản</button>
+                                <button class="btF" data-clipboard-target="#textarea" id='copystr'>Sao chép kịch bản</button>
+                            </div>
+                        </div>
+                        <div class='textarea-box'>
+                            <textarea id='textarea' ref='textarea' :value='isShowCode ? luastr: ""' readonly></textarea>
+                            <div class='check-show-code' v-show='!isShowCode'>
+                                <button class='textarea-btn' @click='isShowCode = true'>Tạo kịch bản mới</button>
+                                <span
+                                    style='color:#e6a23c;padding: 0 30px;text-align: center;'>Đối với các hình ảnh được tạo có chiều rộng*cao hơn 1.000.000 pixel, kịch bản sẽ rất lag.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        "use strict"; Vue.prototype.$window = void 0; var FLAG = { CONVERT_PROGRESS: 0, CONVERT_FINISHED: 1, ANALYSIS_PROGRESS: 2, ANALYSIS_FINISHED: 3 }, MSG = { SEND_IMAGE_INFO: 0 }, app = new Vue({ mounted: function () { var e = this, t = new Blob([document.querySelector("#worker").textContent]), s = window.URL.createObjectURL(t); this.worker = new Worker(s), this.worker.onmessage = this.handleWorkerMsg, new ClipboardJS("#copystr", { text: function () { return e.luastr } }) }, el: "#app", data: { worker: null, colortable: [4292005375, 4291869688, 4293377761, 4293510353, 4293511877, 4294696635, 4294763955, 4294110130, 4292599730, 4291421896, 4291358172, 4291032304, 4291099135, 4289981695, 4289913087, 4290563327, 4278255616, 4294967295, 4291349719, 4287736831, 4286631167, 4286767359, 4288542207, 4288474854, 4289061317, 4289189541, 4291087232, 4293582464, 4294628481, 4294560400, 4292520095, 4292582835, 4292383694, 4289826804, 4288322287, 4285756389, 4287783664, 4291324090, 4291655061, 4291528313, 4294358372, 4294427471, 4292989005, 4289508941, 4286891905, 4286698926, 4285917148, 4285985279, 4283422207, 4283283455, 4284844799, 4288981692, 4293848814, 4292927712, 4286548129, 4282609919, 4280723455, 4280863487, 4284018431, 4283949524, 4284861596, 4285184870, 4288325158, 4292527654, 4294358569, 4294288706, 4290800476, 4290926462, 4290529195, 4286202092, 4283454447, 4281746420, 4284686057, 4289734556, 4290198119, 4290072895, 4294153761, 4294224131, 4292131840, 4287141376, 4283477836, 4283089803, 4281982157, 4282117119, 4278698495, 4278229247, 4280440831, 4284706445, 4290624957, 4288585374, 4282930553, 4280177140, 4278226171, 4278236159, 4281719037, 4281584320, 4282561404, 4282884163, 4286286080, 4290882560, 4293237507, 4293232670, 4289415481, 4289803614, 4289340558, 4284488664, 4281678309, 4281282515, 4284160194, 4288814971, 4289211729, 4288626480, 4291982873, 4291921922, 4289173248, 4285233408, 4282158648, 4281900904, 4281054383, 4281188603, 4278231295, 4278222069, 4279847654, 4282469485, 4285887861, 4284572001, 4281811037, 4279583704, 4278217967, 4278226943, 4280658169, 4280589726, 4281305941, 4281498926, 4284246272, 4287595264, 4290606850, 4290798869, 4287837480, 4288685893, 4288289642, 4283897005, 4280821958, 4280032439, 4283371144, 4287370314, 4287765297, 4286456602, 4288759565, 4288370433, 4284768256, 4282404096, 4280311323, 4280183091, 4279728002, 4279730165, 4278218751, 4278211046, 4278990527, 4281218126, 4282532418, 4280361249, 4280493886, 4278201565, 4278218239, 4278234111, 4278245119, 4278250158, 4279754084, 4283680768, 4289052416, 4292130816, 4293562624, 4294926889, 4294856496, 4293525602, 4294901930, 4284617157, 4278190293, 4282652671, 4283891957, 4294508757, 4294909797, 4294859325, 4294932777, 4294946816, 4294960384, 4290177309, 4285982208, 4278452086, 4278255558, 4278250239, 4278240511, 4278227455, 4278205951, 4294045676, 4287331680, 4286213716, 4292663503, 4282412799, 4282428415, 4282439679, 4278255615, 4282515438, 4284088242, 4289654889, 4292542308, 4294967064, 4294952e3, 4294937156, 4294864211, 4294921596, 4294656224, 4286660863, 4283585279, 4286614271, 4289429759, 4294738154, 4294936755, 4294942348, 4294947202, 4294957184, 4294967172, 4293656487, 4291491513, 4287692748, 4286709748, 4287496191, 4286572031, 4286632447, 4286619391, 4289635472, 4283385655, 4281872934, 4288450680, 4292928511, 4292341759, 4292211967, 4292738303, 4292606968, 4292868589, 4292801245, 4293783761, 4294571473, 4294964185, 4294699734, 4294304479, 4294435048, 4294170095, 4293122298, 4293124348, 16777215], tipStr: "ลากหรือวางรูปภาพที่นี่เพื่ออัปโหลด", isdorpin: !1, timer: null, imageBase64Data: "", srcImageWidth: 0, srcImageHeight: 0, destImgWidth: 0, destImgHeight: 0, lockWH: !0, wh_ratio: 0, face_v: "0", face_h: "1", areaSize: 20, areaDelay: 10, placeSpeed: 100, blockid: 667, isDither: !1, showColorPicker: !1, bkColor: "", destImageBase64Data: "", progress: 0, progressTip: "", showProgress: !1, luastr: "", isShowCode: !1, blockInfo: [{ label: "667 - Tô màu Khối Xi Măng", id: 667 }, { label: "600 - Khối Bông Vải", id: 600 }, { label: "633 - Khối Thủy Tinh", id: 633 }, { label: "650 - Mảnh thủy tinh", id: 650 }, { label: "616 - Vải Nỉ", id: 616 }, { label: "1120 - Khối Bạc Kín Cũ", id: 1120 }] }, methods: { checkInDropBox: function (e, t) { e.target !== this.$refs.dropbox && e.target !== this.$refs["drop-tip-box"] || (this.tipStr = (this.isdorpin = t) ? "ปล่อยปุ่มเมาส์ซ้ายเพื่ออัปโหลด" : "ลากและวางรูปภาพที่นี่เพื่ออัปโหลด") }, dropfile: function (e) { var t = e.dataTransfer.files[0]; if (t) { if (-1 === t.type.indexOf("image")) return this.tipStr = "ลากและวางรูปภาพที่นี่เพื่ออัปโหลด", this.isdorpin = !1, void this.showErrorMsg("เกิดข้อผิดพลาด โปรดเลือกไฟล์ภาพ"); this.$refs["drop-tip-box"].style.display = "none"; var s = new FileReader; s.onload = this.showSrcImage, s.readAsDataURL(t) } }, showSrcImage: function (e) { this.imageBase64Data = e.target.result }, handleUploadFile: function (e) { this.dropfile({ dataTransfer: { files: e.target.files } }) }, readFile: function (e) { var t = e.target.result; t && (this.imageBuffer = t, this.showSrcImage(t)) }, showErrorMsg: function (e) { var t = document.createElement("div"); t.className = "error-msg-on error-msg", t.innerText = e, document.body.append(t), setTimeout(function () { t.classList.remove("error-msg-on"), setTimeout(function () { t.parentNode.removeChild(t) }, 1e3) }, 3e3) }, imgload: function (e) { e.target; var t = e.target, s = t.width, i = t.height; this.wh_ratio = s / i, this.srcImageWidth = s, this.srcImageHeight = i, this.destImgHeight = i < 256 ? i : 256, this.destImgWidth = parseInt(this.destImgHeight * this.wh_ratio) }, selectBkColor: function (e) { var t, s, i, o, r = e.toString(16); r.length < 8 ? this.bkColor = "rgba(0,0,0,0)" : (t = r[0] + r[1], s = r[2] + r[3], i = r[4] + r[5], o = r[6] + r[7], this.bkColor = "rgba(".concat(parseInt(o, 16), ",").concat(parseInt(i, 16), ",").concat(parseInt(s, 16), ",").concat(parseInt(t, 16), ")")), console.log(this.bkColor) }, closeColorPicker: function () { this.showColorPicker = !1 }, inputImageWidth: function (e) { this.destImgWidth = Number(e), this.lockWH && (this.destImgHeight = parseInt(e / this.wh_ratio)) }, inputImageHeight: function (e) { this.destImgHeight = Number(e), this.lockWH && (this.destImgWidth = parseInt(e * this.wh_ratio)) }, handleWorkerMsg: function (e) { var t = e.data; switch (t.msg) { case FLAG.CONVERT_FINISHED: this.destImageBase64Data = this.arrayBufferToBase64(t.buffer, this.destImgWidth, this.destImgHeight), this.progress = 100, this.progressTip = "แปลงโค้ดสำเร็จแล้ว 100%"; break; case FLAG.CONVERT_PROGRESS: this.progress = parseInt(100 * t.progress), this.progressTip = "ความคืบหน้า ".concat(this.progress, "%,"); break; case FLAG.ANALYSIS_FINISHED: this.progressTip = "สร้างสคริปต์สำเร็จ", this.luastr = t.str, this.$refs.textarea.value = this.luastr } }, beginAnalysis: function () { var t = this; this.base64ToUint8Array(this.imageBase64Data).then(function (e) { return e instanceof ArrayBuffer ? (t.progress = 0, t.showProgress = !0, void t.worker.postMessage({ msg: MSG.SEND_IMAGE_INFO, data: { buffer: e, width: t.destImgWidth, height: t.destImgHeight, isDither: t.isDither, blockid: t.blockid, face_v: t.face_v, face_h: t.face_h, areaSize: t.areaSize, areaDelay: t.areaDelay, placeSpeed: t.placeSpeed, bkColor: function () { if (t.bkColor) { var e = t.bkColor.match(/[0-9,]+(?=\))/)[0].split(","); return e.length < 4 ? [] : e.map(function (e) { return Number(e) }) } return [] }() } }, [e])) : (console.log(e), void t.showErrorMsg(e)) }).catch(function (e) { console.log(e) }) }, base64ToUint8Array: function (t) { var r = this; return new Promise(function (s) { var e = new Image; e.src = t; var i = r.destImgWidth, o = r.destImgHeight; e.onload = function () { var e = document.createElement("canvas"); e.width = i, e.height = o; var t = e.getContext("2d"); t.drawImage(this, 0, 0, i, o), s(t.getImageData(0, 0, i, o).data.buffer) }, e.onerror = function (e) { s("ไม่สามารถตรวจสอบได้ โปรดอัพโหลดรูปภาพก่อน") } }) }, arrayBufferToBase64: function (e, t, s) { var i = document.createElement("canvas"); i.width = t, i.height = s; var o = i.getContext("2d"), r = new ImageData(new Uint8ClampedArray(e), t, s); return o.putImageData(r, 0, 0), i.toDataURL("image/png", 1) } }, watch: { lockWH: function (e) { e && (this.wh_ratio = this.destImgWidth / this.destImgHeight) } }, computed: {}, components: { elCheckbox: { template: "\n            <label class='el-checkbox' >\n            <input type='checkbox' :checked='passValue' @change=\"$emit('change', $event.target.checked)\">\n            <span><slot></slot></span>\n            </label>", model: { prop: "passValue", event: "change" }, props: ["passValue"] }, elInputBox: { template: "\n            <label class='el-input-box'>\n            <span><slot></slot></span>\n            <input type='text' class='el-input' :value='value' @change=\"$emit('change', $event.target.value)\" @input='$emit(\"input\", $event.target.value)'>\n            </label>\n            ", model: { prop: "value", event: "change" }, props: ["value"] }, elRadiobox: { template: "\n            <label class='el-radiobox' >\n            <input type='radio' :checked='passValue == value' @change=\"$emit('change', value)\" :name='name'>\n            <span><slot></slot></span>\n            </label>", model: { prop: "passValue", event: "change" }, props: ["name", "passValue", "value"] }, elSelect: { template: "\n            <label class='el-select' :class='{\"el-select-on\":isOpen}' ref='select-root' tabindex=\"-1\" @blur='toclose'\n            @focus='isFocus = true'>\n            <div class='el-select-head' :class='{\"el-select-head-focus\": isFocus}' @click='checkOpen' ref='input'\n            id='select-input'>{{ options[index].label }}\n            </div>\n            <div class='ul-contain'>\n            <ul id='ul-box' @click='getFocus'>\n            <li v-for='(v, i) of options' @click='changeIndex' :key='v.id'\n            :class='{\"is-select\": index == i, \"is-hover\": hoverIndex == i}' :ki='i'\n            @mouseenter='hoverIndex = i'>\n            {{ v.label }}</li>\n            </ul>\n            </div>\n            </label>\n            ", data: function () { return { isOpen: !1, isFocus: !1, index: 0, hoverIndex: 0 } }, props: ["options"], methods: { getFocus: function (e) { "ul-box" === e.target.id && (this.isOpen = !0), this.$refs.input.focus() }, changeIndex: function (e) { this.index = e.target.getAttribute("ki"), this.isOpen = !1, this.$emit("change", this.options[this.index].id) }, checkOpen: function () { this.isOpen = !this.isOpen, this.isOpen && this.$refs["select-root"].focus() }, toclose: function () { this.isFocus = !1, this.isOpen = !1 } }, watch: { isOpen: function (e) { e && (this.hoverIndex = this.index) } } }, elColorPicker: { template: "\n            <div class='select-color-wrap'>\n            <div class=\"select-color-content\" @click.stop='selectColor'>\n            <div>\n            <div v-for='(color, i) of colors' :style='{background:color}' class='color-div' :index='i'\n                :class='{\"color-selected\": selectIndex == i}'>\n            </div>\n            </div>\n            <div class='select-color-bottom'>\n            <button\n                @click='$emit(\"select-color\",  colortable[selectIndex]);$emit(\"select-color-close\")'>ยืนยัน</button>\n            <button @click='$emit(\"select-color-close\")'>ยกเลิก</button>\n            </div>\n            </div>\n            </div>", props: ["colortable"], data: function () { return { selectIndex: 0 } }, methods: { selectColor: function (e) { -1 !== e.target.className.indexOf("color-div") && (this.selectIndex = e.target.getAttribute("index")) } }, computed: { colors: function () { return this.colortable.map(function (e) { var t = e.toString(16), s = parseInt(t[0] + t[1], 16), i = parseInt(t[2] + t[3], 16), o = parseInt(t[4] + t[5], 16), r = parseInt(t[6] + t[7], 16); return t.length < 8 ? "rgba(0,0,0,0)" : "rgba(".concat(r, ",").concat(o, ",").concat(i, ",").concat(s, ")") }) } } }, elProgress: { template: "<div class='progress-wrap'>\n                        <div class='progress-box'>\n                            <div class='progress-bottom'>\n                                <div class='progress-top' v-progress='progress'>\n                                    <span class='progress-tip'><slot></slot></span>\n                                </div>\n                            </div>\n                            <button class='progress-btn' :disabled='progress<100' @click='$emit(\"close\")'>OK</button>\n                        </div>\n                        </div>", props: { progress: Number }, directives: { progress: function (e, t) { e.style.width = t.value + "%" } } } } });
+    </script>
+</body>
+</html>
